@@ -1,2 +1,2 @@
-# sspp
-Structured Stream Processing and Presentation
+# Structured Stream Processing and Presentation (`sspp`)
+
