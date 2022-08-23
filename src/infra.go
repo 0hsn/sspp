@@ -1,6 +1,9 @@
 package main
 
 import (
+	"bufio"
+	"os"
+
 	flag "github.com/spf13/pflag"
 )
 
@@ -30,9 +33,30 @@ func defineFlags(cliopts *options) {
 
 	cliopts.json = json
 	cliopts.or = or
-	cliopts.data = data
+
+	if len(data) > 0 {
+		cliopts.data = data
+	} else if isInputFromPipe() {
+		cliopts.data = readFromPipe()
+	}
 }
 
 func convertOptionsToFeature(opts *options) *Feature {
 	return &Feature{OpType: JSON, Query: opts.json, Data: opts.data, DefaulVal: opts.or}
+}
+
+func isInputFromPipe() bool {
+	fileInfo, _ := os.Stdin.Stat()
+	return fileInfo.Mode()&os.ModeCharDevice == 0
+}
+
+func readFromPipe() string {
+	scanner := bufio.NewScanner(bufio.NewReader(os.Stdin))
+	var buf []byte
+
+	for scanner.Scan() {
+		buf = append(buf, scanner.Bytes()...)
+	}
+
+	return string(buf[:])
 }
