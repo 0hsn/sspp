@@ -1,46 +1,38 @@
 package main
 
 import (
-	"fmt"
-
 	flag "github.com/spf13/pflag"
 )
 
-const (
-	JSON = 0
-)
-
 type options struct {
-	j, or, da string
-}
-
-type Feature struct {
-	OpType          int8
-	Data, DefaulVal string
+	json, or, data string
 }
 
 func ParseFlags() *Feature {
 	var cliopts = options{"", "", ""}
 	defineFlags(&cliopts)
-	fmt.Printf("%v\n", cliopts)
-
-	return parseAndValidateFlags()
+	return convertOptionsToFeature(&cliopts)
 }
 
 func defineFlags(cliopts *options) {
-	var j, or, da string
+	var json, or, data string
 
-	flag.StringVarP(&j, "json", "j", "", "valid data selector")
+	// define selector flag
+	flag.StringVarP(&json, "json", "j", "", "valid data selector")
+
+	// define default value flag
 	flag.StringVar(&or, "or", "", "valid data selector")
-	flag.StringVar(&da, "data", "", "valid data selector")
+
+	// define data flag
+	flag.StringVar(&data, "data", "", "valid data selector")
 
 	flag.Parse()
-	// fmt.Printf("%s\n", j)
 
-	cliopts.j = j
+	cliopts.json = json
 	cliopts.or = or
-	cliopts.da = da
+	cliopts.data = data
 }
-func parseAndValidateFlags() *Feature {
-	return &Feature{JSON, "", ""}
+
+func convertOptionsToFeature(opts *options) *Feature {
+	return &Feature{OpType: JSON, Data: opts.data, DefaulVal: opts.or}
 }
