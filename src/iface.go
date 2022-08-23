@@ -5,14 +5,14 @@ const (
 )
 
 type Feature struct {
-	OpType          int8
-	Data, DefaulVal string
+	OpType                 int8
+	Data, Query, DefaulVal string
 }
 
 func GetDataFromFeature(feat *Feature) string {
 	switch feat.OpType {
 	case JSON:
-		return GetJsonFromFeature()
+		return getJson(feat.Data, feat.Query, feat.DefaulVal)
 	default:
 		return ""
 	}

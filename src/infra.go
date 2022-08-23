@@ -34,5 +34,5 @@ func defineFlags(cliopts *options) {
 }
 
 func convertOptionsToFeature(opts *options) *Feature {
-	return &Feature{OpType: JSON, Data: opts.data, DefaulVal: opts.or}
+	return &Feature{OpType: JSON, Query: opts.json, Data: opts.data, DefaulVal: opts.or}
 }
