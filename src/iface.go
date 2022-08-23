@@ -9,6 +9,7 @@ type Feature struct {
 	Data, Query, DefaulVal string
 }
 
+// Factory to get data based on choice
 func GetDataFromFeature(feat *Feature) string {
 	switch feat.OpType {
 	case JSON:
