@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"fmt"
 	"io"
 	"os"
 
@@ -35,10 +36,19 @@ func defineFlags(cliopts *options) {
 	cliopts.json = json
 	cliopts.or = or
 
+	fi, err := os.Stdin.Stat()
+	if err != nil {
+		stop("error: While reading stdin")
+	}
+
 	if len(data) > 0 {
 		cliopts.data = data
-	} else {
+	} else if (fi.Mode() & os.ModeNamedPipe) != 0 {
 		cliopts.data = readStdin()
+	}
+
+	if len(cliopts.data) == 0 {
+		stop("error: No data found")
 	}
 }
 
@@ -59,4 +69,9 @@ func readStdin() string {
 	}
 
 	return string(output[:])
+}
+
+func stop(msg string) {
+	fmt.Println(msg)
+	os.Exit(2)
 }
