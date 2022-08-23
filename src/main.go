@@ -1,5 +1,8 @@
 package main
 
+import "fmt"
+
 func main() {
-	ParseFlags()
+	feat := ParseFlags()
+	fmt.Println(GetDataFromFeature(feat))
 }
