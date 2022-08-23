@@ -72,6 +72,6 @@ func readStdin() string {
 }
 
 func stop(msg string) {
-	fmt.Println(msg)
+	fmt.Fprintln(os.Stderr, msg)
 	os.Exit(2)
 }
