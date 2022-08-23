@@ -36,18 +36,13 @@ func defineFlags(cliopts *options) {
 
 	if len(data) > 0 {
 		cliopts.data = data
-	} else if isInputFromPipe() {
+	} else {
 		cliopts.data = readFromPipe()
 	}
 }
 
 func convertOptionsToFeature(opts *options) *Feature {
 	return &Feature{OpType: JSON, Query: opts.json, Data: opts.data, DefaulVal: opts.or}
-}
-
-func isInputFromPipe() bool {
-	fileInfo, _ := os.Stdin.Stat()
-	return fileInfo.Mode()&os.ModeCharDevice == 0
 }
 
 func readFromPipe() string {
