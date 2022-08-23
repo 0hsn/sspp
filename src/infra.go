@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"io"
 	"os"
 
 	flag "github.com/spf13/pflag"
@@ -37,7 +38,7 @@ func defineFlags(cliopts *options) {
 	if len(data) > 0 {
 		cliopts.data = data
 	} else {
-		cliopts.data = readFromPipe()
+		cliopts.data = readStdin()
 	}
 }
 
@@ -45,13 +46,17 @@ func convertOptionsToFeature(opts *options) *Feature {
 	return &Feature{OpType: JSON, Query: opts.json, Data: opts.data, DefaulVal: opts.or}
 }
 
-func readFromPipe() string {
-	scanner := bufio.NewScanner(bufio.NewReader(os.Stdin))
-	var buf []byte
+func readStdin() string {
+	reader := bufio.NewReader(os.Stdin)
+	var output []rune
 
-	for scanner.Scan() {
-		buf = append(buf, scanner.Bytes()...)
+	for {
+		input, _, err := reader.ReadRune()
+		if err != nil && err == io.EOF {
+			break
+		}
+		output = append(output, input)
 	}
 
-	return string(buf[:])
+	return string(output[:])
 }
