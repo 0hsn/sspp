@@ -33,6 +33,13 @@ Although currently this tool is an alternative to `jq`.
 
 ```bash
 curl -s https://reqres.in/api/users/2 | sspp --json='data.email'
+
+# you can pass data directly with --data flag
+sspp --json='data.email' --data='{"data": {"email": "sample@example.org"}}'
+
+# It is possible to pass default data directly with --or flag
+sspp --json='data.age' --data='{"data": {"email": "sample@example.org"}}' --or="nil"
+curl -s https://reqres.in/api/users/2 | sspp --json='data.nonExistent' --or="nil"
 ```
 
 ### Report issue
