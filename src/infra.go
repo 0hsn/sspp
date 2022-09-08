@@ -10,11 +10,11 @@ import (
 )
 
 type options struct {
-	json, or, data string
+	json, xml, or, data string
 }
 
 func ParseFlags() *Feature {
-	var cliopts = options{"", "", ""}
+	var cliopts = options{"", "", "", ""}
 	defineFlags(&cliopts)
 	return convertOptionsToFeature(&cliopts)
 }
@@ -49,10 +49,17 @@ func defineFlags(cliopts *options) {
 		stop("error: Either multiple or no selector found")
 	}
 
-	// set data
-	cliopts.json = json
+	// set selector
+	if hasJson == 1 {
+		cliopts.json = json
+	} else if hasXml == 1 {
+		cliopts.xml = xml
+	}
+
+	// set default value
 	cliopts.or = or
 
+	// set data
 	fi, err := os.Stdin.Stat()
 	if err != nil {
 		stop("error: While reading stdin")
