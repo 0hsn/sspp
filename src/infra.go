@@ -20,10 +20,12 @@ func ParseFlags() *Feature {
 }
 
 func defineFlags(cliopts *options) {
-	var json, or, data string
+	var json, xml, or, data string
+	var hasJson, hasXml int8
 
 	// define selector flag
 	flag.StringVarP(&json, "json", "j", "", "valid dot-seperated data selector")
+	flag.StringVarP(&xml, "xml", "x", "", "valid dot-seperated data selector")
 
 	// define default value flag
 	flag.StringVar(&or, "or", "", "valid data selector")
@@ -34,8 +36,17 @@ func defineFlags(cliopts *options) {
 	flag.Parse()
 
 	// validate data
-	if len(json) < 1 {
-		stop("error: No data selector found")
+
+	if json != "" {
+		hasJson = 1
+	}
+
+	if xml != "" {
+		hasXml = 1
+	}
+
+	if hasJson^hasXml == 0 {
+		stop("error: Either multiple or no selector found")
 	}
 
 	// set data
