@@ -23,7 +23,7 @@ func defineFlags(cliopts *options) {
 	var json, or, data string
 
 	// define selector flag
-	flag.StringVarP(&json, "json", "j", "", "valid data selector")
+	flag.StringVarP(&json, "json", "j", "", "valid dot-seperated data selector")
 
 	// define default value flag
 	flag.StringVar(&or, "or", "", "valid data selector")
@@ -33,6 +33,12 @@ func defineFlags(cliopts *options) {
 
 	flag.Parse()
 
+	// validate data
+	if len(json) < 1 {
+		stop("error: No data selector found")
+	}
+
+	// set data
 	cliopts.json = json
 	cliopts.or = or
 
