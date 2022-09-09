@@ -9,21 +9,21 @@ import (
 	flag "github.com/spf13/pflag"
 )
 
-type options struct {
-	json, or, data string
-}
-
+// Create and load values to feature
 func ParseFlags() *Feature {
-	var cliopts = options{"", "", ""}
-	defineFlags(&cliopts)
-	return convertOptionsToFeature(&cliopts)
+	var feature = &Feature{}
+	defineFlags(feature)
+	return feature
 }
 
-func defineFlags(cliopts *options) {
-	var json, or, data string
+// Define and process values form cli arguments
+func defineFlags(feature *Feature) {
+	var json, xml, or, data string
+	var hasJson, hasXml int8
 
 	// define selector flag
-	flag.StringVarP(&json, "json", "j", "", "valid data selector")
+	flag.StringVarP(&json, "json", "j", "", "valid dot-seperated data selector")
+	flag.StringVarP(&xml, "xml", "x", "", "valid dot-seperated data selector")
 
 	// define default value flag
 	flag.StringVar(&or, "or", "", "valid data selector")
@@ -33,29 +33,50 @@ func defineFlags(cliopts *options) {
 
 	flag.Parse()
 
-	cliopts.json = json
-	cliopts.or = or
+	// validate data
 
+	if json != "" {
+		hasJson = 1
+	}
+
+	if xml != "" {
+		hasXml = 1
+	}
+
+	if hasJson^hasXml == 0 {
+		stop("error: Either multiple or no selector found")
+	}
+
+	// set selector
+	if hasJson == 1 {
+		feature.Query = json
+		feature.OpType = JSON
+	} else if hasXml == 1 {
+		feature.Query = xml
+		feature.OpType = XML
+	}
+
+	// set default value
+	feature.DefaulVal = or
+
+	// set data
 	fi, err := os.Stdin.Stat()
 	if err != nil {
 		stop("error: While reading stdin")
 	}
 
 	if len(data) > 0 {
-		cliopts.data = data
+		feature.Data = data
 	} else if (fi.Mode() & os.ModeNamedPipe) != 0 {
-		cliopts.data = readStdin()
+		feature.Data = readStdin()
 	}
 
-	if len(cliopts.data) == 0 {
+	if len(feature.Data) == 0 {
 		stop("error: No data found")
 	}
 }
 
-func convertOptionsToFeature(opts *options) *Feature {
-	return &Feature{OpType: JSON, Query: opts.json, Data: opts.data, DefaulVal: opts.or}
-}
-
+// Read from strandred input stream
 func readStdin() string {
 	reader := bufio.NewReader(os.Stdin)
 	var output []rune
@@ -71,6 +92,7 @@ func readStdin() string {
 	return string(output[:])
 }
 
+// Print and exit funcion: use for error
 func stop(msg string) {
 	fmt.Fprintln(os.Stderr, msg)
 	os.Exit(2)
