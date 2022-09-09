@@ -9,17 +9,15 @@ import (
 	flag "github.com/spf13/pflag"
 )
 
-type options struct {
-	json, xml, or, data string
-}
-
+// Create and load values to feature
 func ParseFlags() *Feature {
-	var cliopts = options{"", "", "", ""}
-	defineFlags(&cliopts)
-	return convertOptionsToFeature(&cliopts)
+	var feature = NewFeature()
+	defineFlags(feature)
+	return feature
 }
 
-func defineFlags(cliopts *options) {
+// Define and process values form cli arguments
+func defineFlags(feature *Feature) {
 	var json, xml, or, data string
 	var hasJson, hasXml int8
 
@@ -51,13 +49,15 @@ func defineFlags(cliopts *options) {
 
 	// set selector
 	if hasJson == 1 {
-		cliopts.json = json
+		feature.Query = json
+		feature.OpType = JSON
 	} else if hasXml == 1 {
-		cliopts.xml = xml
+		feature.Query = xml
+		feature.OpType = XML
 	}
 
 	// set default value
-	cliopts.or = or
+	feature.DefaulVal = or
 
 	// set data
 	fi, err := os.Stdin.Stat()
@@ -66,20 +66,17 @@ func defineFlags(cliopts *options) {
 	}
 
 	if len(data) > 0 {
-		cliopts.data = data
+		feature.Data = data
 	} else if (fi.Mode() & os.ModeNamedPipe) != 0 {
-		cliopts.data = readStdin()
+		feature.Data = readStdin()
 	}
 
-	if len(cliopts.data) == 0 {
+	if len(feature.Data) == 0 {
 		stop("error: No data found")
 	}
 }
 
-func convertOptionsToFeature(opts *options) *Feature {
-	return &Feature{OpType: JSON, Query: opts.json, Data: opts.data, DefaulVal: opts.or}
-}
-
+// Read from strandred input stream
 func readStdin() string {
 	reader := bufio.NewReader(os.Stdin)
 	var output []rune
@@ -95,6 +92,7 @@ func readStdin() string {
 	return string(output[:])
 }
 
+// Print and exit funcion: use for error
 func stop(msg string) {
 	fmt.Fprintln(os.Stderr, msg)
 	os.Exit(2)

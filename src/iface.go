@@ -2,11 +2,16 @@ package main
 
 const (
 	JSON = 0
+	XML  = 1
 )
 
 type Feature struct {
 	OpType                 int8
 	Data, Query, DefaulVal string
+}
+
+func NewFeature() *Feature {
+	return &Feature{}
 }
 
 // Factory to get data based on choice
