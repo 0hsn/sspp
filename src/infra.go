@@ -11,7 +11,7 @@ import (
 
 // Create and load values to feature
 func ParseFlags() *Feature {
-	var feature = NewFeature()
+	var feature = &Feature{}
 	defineFlags(feature)
 	return feature
 }

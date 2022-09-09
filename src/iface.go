@@ -5,13 +5,10 @@ const (
 	XML  = 1
 )
 
+// This holds parsed content
 type Feature struct {
 	OpType                 int8
 	Data, Query, DefaulVal string
-}
-
-func NewFeature() *Feature {
-	return &Feature{}
 }
 
 // Factory to get data based on choice
