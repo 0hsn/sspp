@@ -16,6 +16,8 @@ func GetDataFromFeature(feat *Feature) string {
 	switch feat.OpType {
 	case JSON:
 		return getJson(feat.Data, feat.Query, feat.DefaulVal)
+	case XML:
+		return getXml(feat.Data, feat.Query, feat.DefaulVal)
 	default:
 		return ""
 	}
