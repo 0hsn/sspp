@@ -1,5 +1,7 @@
 ### Usage
 
+[See command reference](cmdref.md)
+
 **JSON** can parsed on following ways:
 
 ```bash
