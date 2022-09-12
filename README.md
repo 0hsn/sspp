@@ -21,8 +21,9 @@ Software status: `Alpha`.
 
 ## How
 
-[**How to install**](docs/setup.md) <br />
-[**How to use**](docs/usage.md)
+[**Install guide**](docs/setup.md) <br />
+[**Usage guide**](docs/usage.md) <br />
+[**Command manual**](docs/cmdref.md)
 
 ## Report issue
 
