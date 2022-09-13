@@ -19,7 +19,7 @@ Supported types
 
 Software status: `Alpha`.
 
-## How
+## Documentation
 
 [**Install guide**](docs/setup.md) <br />
 [**Usage guide**](docs/usage.md) <br />
