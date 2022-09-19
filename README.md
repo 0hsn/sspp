@@ -28,3 +28,9 @@ Software status: `Alpha`.
 ## Report issue
 
 You can report issues or ask questions on [github issues](https://github.com/0hsn/sspp/issues).
+
+## See also
+
+- [stedolan/jq](https://github.com/stedolan/jq)
+- [kislyuk/yq](https://github.com/kislyuk/yq)
+- [brimdata/zed](https://github.com/brimdata/zed)
