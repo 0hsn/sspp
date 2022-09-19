@@ -60,6 +60,9 @@ func defineFlags(feature *Feature) {
 	} else if hasXml == 1 {
 		feature.Query = xml
 		feature.OpType = XML
+	} else if hasYaml == 1 {
+		feature.Query = yaml
+		feature.OpType = YAML
 	}
 
 	// set default value

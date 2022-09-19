@@ -3,6 +3,7 @@ package main
 const (
 	JSON = 0
 	XML  = 1
+	YAML = 2
 )
 
 // This holds parsed content
