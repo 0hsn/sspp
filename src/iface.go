@@ -19,6 +19,8 @@ func GetDataFromFeature(feat *Feature) string {
 		return getJson(feat.Data, feat.Query, feat.DefaulVal)
 	case XML:
 		return getXml(feat.Data, feat.Query, feat.DefaulVal)
+	case YAML:
+		return getYaml(feat.Data, feat.Query, feat.DefaulVal)
 	default:
 		return ""
 	}
