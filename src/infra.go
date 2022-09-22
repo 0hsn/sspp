@@ -23,9 +23,9 @@ func defineFlags(feature *Feature) {
 	var or, data string
 
 	// define selector flag
-	flag.StringVarP(&json, "json", "j", "", "valid dot-seperated json selector")
-	flag.StringVarP(&xml, "xml", "x", "", "valid dot-seperated xml selector")
-	flag.StringVarP(&yaml, "yaml", "y", "", "valid dot-seperated json selector")
+	flag.StringVarP(&json, "json", "j", "", "valid dot-separated json selector")
+	flag.StringVarP(&xml, "xml", "x", "", "valid dot-separated xml selector")
+	flag.StringVarP(&yaml, "yaml", "y", "", "valid dot-separated json selector")
 
 	// define default value flag
 	flag.StringVar(&or, "or", "", "valid data selector")
@@ -66,7 +66,7 @@ func defineFlags(feature *Feature) {
 	}
 
 	// set default value
-	feature.DefaulVal = or
+	feature.DefaultVal = or
 
 	// set data
 	fi, err := os.Stdin.Stat()
@@ -85,7 +85,7 @@ func defineFlags(feature *Feature) {
 	}
 }
 
-// Read from strandred input stream
+// Read from stranded input stream
 func readStdin() string {
 	reader := bufio.NewReader(os.Stdin)
 	var output []rune
@@ -101,7 +101,7 @@ func readStdin() string {
 	return string(output[:])
 }
 
-// Print and exit funcion: use for error
+// Print and exit function: used for error
 func stop(msg string) {
 	fmt.Fprintln(os.Stderr, msg)
 	os.Exit(2)
