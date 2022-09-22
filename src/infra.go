@@ -18,12 +18,14 @@ func ParseFlags() *Feature {
 
 // Define and process values form cli arguments
 func defineFlags(feature *Feature) {
-	var json, xml, or, data string
-	var hasJson, hasXml int8
+	var hasJson, hasXml, hasYaml int8
+	var json, xml, yaml string
+	var or, data string
 
 	// define selector flag
-	flag.StringVarP(&json, "json", "j", "", "valid dot-seperated data selector")
-	flag.StringVarP(&xml, "xml", "x", "", "valid dot-seperated data selector")
+	flag.StringVarP(&json, "json", "J", "", "valid dot-separated json selector")
+	flag.StringVarP(&xml, "xml", "X", "", "valid dot-separated xml selector")
+	flag.StringVarP(&yaml, "yaml", "Y", "", "valid dot-separated yaml selector")
 
 	// define default value flag
 	flag.StringVar(&or, "or", "", "valid data selector")
@@ -43,7 +45,11 @@ func defineFlags(feature *Feature) {
 		hasXml = 1
 	}
 
-	if hasJson^hasXml == 0 {
+	if yaml != "" {
+		hasYaml = 1
+	}
+
+	if hasJson^hasXml^hasYaml == 0 {
 		stop("error: Either multiple or no selector found")
 	}
 
@@ -54,10 +60,13 @@ func defineFlags(feature *Feature) {
 	} else if hasXml == 1 {
 		feature.Query = xml
 		feature.OpType = XML
+	} else if hasYaml == 1 {
+		feature.Query = yaml
+		feature.OpType = YAML
 	}
 
 	// set default value
-	feature.DefaulVal = or
+	feature.DefaultVal = or
 
 	// set data
 	fi, err := os.Stdin.Stat()
@@ -76,7 +85,7 @@ func defineFlags(feature *Feature) {
 	}
 }
 
-// Read from strandred input stream
+// Read from stranded input stream
 func readStdin() string {
 	reader := bufio.NewReader(os.Stdin)
 	var output []rune
@@ -92,7 +101,7 @@ func readStdin() string {
 	return string(output[:])
 }
 
-// Print and exit funcion: use for error
+// Print and exit function: used for error
 func stop(msg string) {
 	fmt.Fprintln(os.Stderr, msg)
 	os.Exit(2)
