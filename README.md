@@ -4,20 +4,20 @@
 
 There is no good command-line tool, that works as an umbrella command to parse multiple structured configuration file or stream. 
 
-`sspp` is a command-line tool that works as parse and presentation utility for structured documents, i.e, `json`.
+`sspp` is a command-line tool that works as parse and presentation utility for structured documents, e.g, `json`.
 
 Supported types
 
 - `json` :white_check_mark:
 - `xml` :white_check_mark:
-- `yaml`
+- `yaml` :white_check_mark:
 - `toml`
 - `hcl`
 - `jwt`
 - `ini`
 - `.properties`
 
-Software status: `Alpha`.
+Software status: `Pre-Alpha`.
 
 ## Documentation
 
