@@ -19,12 +19,12 @@ SYNOPSIS
        sspp [OPTIONS...]
 
 OPTIONS
-        --or        Set a defaul value in case the expected not found
+        --or        Set a default value in case the expected not found
 
         --data      Set data to parse, and to select data from.
                     This option get priority over data send via pipe.
 
-    -j, --json      Node selector for json data
+    -J, --json      Node selector for json data
 
-    -x, --xml       Node selector for xml data
+    -X, --xml       Node selector for xml data
 ```

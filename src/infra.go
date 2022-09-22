@@ -23,9 +23,9 @@ func defineFlags(feature *Feature) {
 	var or, data string
 
 	// define selector flag
-	flag.StringVarP(&json, "json", "j", "", "valid dot-separated json selector")
-	flag.StringVarP(&xml, "xml", "x", "", "valid dot-separated xml selector")
-	flag.StringVarP(&yaml, "yaml", "y", "", "valid dot-separated json selector")
+	flag.StringVarP(&json, "json", "J", "", "valid dot-separated json selector")
+	flag.StringVarP(&xml, "xml", "X", "", "valid dot-separated xml selector")
+	flag.StringVarP(&yaml, "yaml", "Y", "", "valid dot-separated json selector")
 
 	// define default value flag
 	flag.StringVar(&or, "or", "", "valid data selector")
