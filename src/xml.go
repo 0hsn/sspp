@@ -8,7 +8,7 @@ import (
 	json "github.com/tidwall/gjson"
 )
 
-// process and return JSON data
+// process and return XML data
 func getXml(data, query, defaultVal string) string {
 	xml := strings.NewReader(data)
 	jsonData, err := xmlToJson.Convert(xml)
