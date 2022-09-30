@@ -33,4 +33,5 @@ You can report issues or ask questions on [github issues](https://github.com/0hs
 
 - [stedolan/jq](https://github.com/stedolan/jq)
 - [kislyuk/yq](https://github.com/kislyuk/yq)
+- [sclevine/yj](https://github.com/sclevine/yj)
 - [brimdata/zed](https://github.com/brimdata/zed)
