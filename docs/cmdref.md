@@ -29,4 +29,6 @@ OPTIONS
     -X, --xml       Valid dot-separated selector for xml data
 
     -Y, --yaml      Valid dot-separated selector for yaml data
+
+    -T, --toml      Valid dot-separated selector for toml data
 ```

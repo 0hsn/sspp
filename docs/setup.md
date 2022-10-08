@@ -21,3 +21,5 @@
 ```bash
 curl -s https://httpbin.org/get | sspp --json='headers.Host'
 ```
+
+See [usage doc](usage.md) for more example uses.
