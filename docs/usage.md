@@ -64,3 +64,57 @@ Then in command-line
 ```bash
 $ cat controllers/nginx-deployment.yaml | sspp -Y='spec.template.spec.containers.0.image'
 ```
+
+---
+
+**TOML** can be parsed in following ways:
+
+```bash
+$ curl -s https://raw.githubusercontent.com/Praqma/helmsman/master/examples/example.toml | sspp --toml="metadata.org" --or='nil'
+```
+
+Another example of toml configuration file
+
+```toml
+# praqma/helmsman.toml
+...
+
+# define your environments and their k8s namespaces
+# syntax:
+# [namespaces.<your namespace>] -- whitespace before this entry does not matter, use whatever indentation style you like
+# protected = <true or false> -- default to false
+[namespaces]
+  [namespaces.production]
+    protected = true
+    [[namespaces.production.limits]]
+      type = "Container"
+      [namespaces.production.limits.default]
+        cpu = "300m"
+        memory = "200Mi"
+      [namespaces.production.limits.defaultRequest]
+        cpu = "200m"
+        memory = "100Mi"
+    [[namespaces.production.limits]]
+      type = "Pod"
+      [namespaces.production.limits.max]
+        memory = "300Mi"
+  [namespaces.staging]
+    protected = false
+    [namespaces.staging.labels]
+      env = "staging"
+    [namespaces.staging.quotas]
+       "limits.cpu" = "10"
+       "limits.memory" = "30Gi"
+       pods = "25"
+       "requests.cpu" = "10"
+       "requests.memory" = "30Gi"
+       [[namespaces.staging.quotas.customQuotas]]
+         name = "requests.nvidia.com/gpu"
+         value = "2"
+...
+```
+Then in command-line
+
+```bash
+$ cat praqma/helmsman.toml | sspp -T='namespaces.production.limits.0.default.cpu'
+```
