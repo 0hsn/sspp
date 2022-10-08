@@ -4,11 +4,12 @@ const (
 	JSON = 0
 	XML  = 1
 	YAML = 2
+	TOML = 3
 )
 
 // This holds parsed content
 type Feature struct {
-	OpType                 int8
+	OpType                  int8
 	Data, Query, DefaultVal string
 }
 

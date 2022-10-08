@@ -18,14 +18,15 @@ func ParseFlags() *Feature {
 
 // Define and process values form cli arguments
 func defineFlags(feature *Feature) {
-	var hasJson, hasXml, hasYaml int8
-	var json, xml, yaml string
+	var hasJson, hasXml, hasYaml, hasToml int8
+	var json, xml, yaml, toml string
 	var or, data string
 
 	// define selector flag
 	flag.StringVarP(&json, "json", "J", "", "valid dot-separated json selector")
 	flag.StringVarP(&xml, "xml", "X", "", "valid dot-separated xml selector")
 	flag.StringVarP(&yaml, "yaml", "Y", "", "valid dot-separated yaml selector")
+	flag.StringVarP(&toml, "toml", "T", "", "valid dot-separated toml selector")
 
 	// define default value flag
 	flag.StringVar(&or, "or", "", "valid data selector")
@@ -49,7 +50,11 @@ func defineFlags(feature *Feature) {
 		hasYaml = 1
 	}
 
-	if hasJson^hasXml^hasYaml == 0 {
+	if toml != "" {
+		hasToml = 1
+	}
+
+	if hasJson^hasXml^hasYaml^hasToml == 0 {
 		stop("error: Either multiple or no selector found")
 	}
 
@@ -63,6 +68,9 @@ func defineFlags(feature *Feature) {
 	} else if hasYaml == 1 {
 		feature.Query = yaml
 		feature.OpType = YAML
+	} else if hasToml == 1 {
+		feature.Query = toml
+		feature.OpType = TOML
 	}
 
 	// set default value
