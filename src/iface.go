@@ -5,6 +5,7 @@ const (
 	XML  = 1
 	YAML = 2
 	TOML = 3
+	INI  = 4
 )
 
 // This holds parsed content
