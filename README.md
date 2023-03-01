@@ -12,7 +12,7 @@ Supported types
 - `toml` :white_check_mark:
 - `hcl`
 - `jwt`
-- `ini`
+- `ini` :white_check_mark:
 - `.properties`
 
 Software status: `Pre-Alpha`.

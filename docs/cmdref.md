@@ -31,4 +31,6 @@ OPTIONS
     -Y, --yaml      Valid dot-separated selector for yaml data
 
     -T, --toml      Valid dot-separated selector for toml data
+
+    -I, --ini       Valid dot-separated selector for ini data
 ```
