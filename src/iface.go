@@ -25,6 +25,8 @@ func GetDataFromFeature(feat *Feature) string {
 		return getYaml(feat.Data, feat.Query, feat.DefaultVal)
 	case TOML:
 		return getToml(feat.Data, feat.Query, feat.DefaultVal)
+	case INI:
+		return getIni(feat.Data, feat.Query, feat.DefaultVal)
 	default:
 		return ""
 	}
