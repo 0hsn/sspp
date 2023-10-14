@@ -4,7 +4,7 @@ import (
 	"testing"
 )
 
-func TestGetIni(t *testing.T) {
+func TestJsonDataBuilderGetIni(t *testing.T) {
 	data := `
 ;;Configuration settings for application
 title=translation_weblite_ca
@@ -17,12 +17,14 @@ multilingual_content=1
 	user=mydbuser
 	password=foo	
 `
+	ft := Feature{OpType: INI, Data: data, Query: "title", DefaultVal: ""}
+	jdb := JsonDataBuilder{feature: &ft}
 
-	if getIni(data, "title", "") != "translation_weblite_ca" {
+	if jdb.getIni() != "translation_weblite_ca" {
 		t.Error("Top level INI parse fail")
 	}
-
-	if getIni(data, "_database.name", "") != "mydb" {
+	jdb.feature.Query = "_database.name"
+	if jdb.getIni() != "mydb" {
 		t.Error("Subsequent level INI parse fail")
 	}
 }
