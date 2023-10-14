@@ -50,6 +50,10 @@ func (jdb *JsonDataBuilder) getIni() string {
 
 // process and return JSON data
 func (jdb *JsonDataBuilder) getJson() string {
+	if !gjson.Valid(jdb.feature.Data) {
+		return "Error: Invalid JSON."
+	}
+
 	res := gjson.Get(jdb.feature.Data, jdb.feature.Query)
 
 	if !res.Exists() {

@@ -28,3 +28,34 @@ multilingual_content=1
 		t.Error("Subsequent level INI parse fail")
 	}
 }
+
+func TestJsonDataBuilderGetJsonPass(t *testing.T) {
+	data := `{
+		"userId": 1,
+		"id": 1,
+		"title": "sunt aut facere repellat provident occaecati excepturi optio reprehenderit",
+		"body": {
+			"asort": "gyp"
+		}
+	  }`
+	ft := Feature{OpType: INI, Data: data, Query: "userId", DefaultVal: ""}
+	jdb := JsonDataBuilder{feature: &ft}
+
+	if jdb.getJson() != "1" {
+		t.Error("Top level JSON parse fail")
+	}
+	jdb.feature.Query = "body.asort"
+	if jdb.getJson() != "gyp" {
+		t.Error("Subsequent level JSON parse fail")
+	}
+}
+
+func TestJsonDataBuilderGetJsonFail(t *testing.T) {
+	data := `"userId": 1,`
+	ft := Feature{OpType: INI, Data: data, Query: "userId", DefaultVal: ""}
+	jdb := JsonDataBuilder{feature: &ft}
+
+	if jdb.getJson() != "Error: Invalid JSON." {
+		t.Error("Top level JSON parse passed")
+	}
+}
