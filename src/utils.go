@@ -69,12 +69,12 @@ func (jdb *JsonDataBuilder) getToml() string {
 	dataB := []byte(jdb.feature.Data)
 
 	if err := toml.Unmarshal(dataB, &jsonI); err != nil {
-		stop(fmt.Sprintf("error: TOML conversion error. %s", err.Error()))
+		return fmt.Sprintf("error: TOML conversion error. %s", err.Error())
 	}
 
 	jsonBytes, err := json.Marshal(interpolate(jsonI))
 	if err != nil {
-		stop(fmt.Sprintf("error: TOML conversion error [2]. %s", err.Error()))
+		return fmt.Sprintf("error: TOML conversion error [2]. %s", err.Error())
 	}
 
 	jsonS := string(jsonBytes)
@@ -93,7 +93,7 @@ func (jdb *JsonDataBuilder) getXml() string {
 	jsonData, err := xmlToJson.Convert(xml)
 
 	if err != nil {
-		stop(fmt.Sprintf("error: XML conversion error. %s", err.Error()))
+		return fmt.Sprintf("error: XML conversion error. %s", err.Error())
 	}
 
 	res := gjson.Get(jsonData.String(), jdb.feature.Query)
@@ -110,7 +110,7 @@ func (jdb *JsonDataBuilder) getYaml() string {
 	jsonData, err := yaml.YAMLToJSON([]byte(jdb.feature.Data))
 
 	if err != nil {
-		stop(fmt.Sprintf("error: YAML conversion error. %s", err.Error()))
+		return fmt.Sprintf("error: YAML conversion error. %s", err.Error())
 	}
 
 	res := gjson.Get(string(jsonData), jdb.feature.Query)
