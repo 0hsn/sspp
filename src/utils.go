@@ -39,7 +39,7 @@ func (jdb *JsonDataBuilder) Export() string {
 func (jdb *JsonDataBuilder) getIni() string {
 	iData := ini.New().Load([]byte(jdb.feature.Data))
 
-	res := gjson.Get(string(iData.Marshal2Json()), jdb.feature.Query)
+	res := gjson.GetBytes(iData.Marshal2Json(), jdb.feature.Query)
 
 	if !res.Exists() {
 		return jdb.feature.DefaultVal
