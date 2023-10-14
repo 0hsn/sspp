@@ -13,6 +13,10 @@ import (
 	"github.com/wlevene/ini"
 )
 
+type JsonDataBuilder struct {
+	// Builds json data out of different data type
+	feature *Feature
+}
 // process and return JSON data
 func getIni(data, query, defaultVal string) string {
 	iData := ini.New().Load([]byte(data))
