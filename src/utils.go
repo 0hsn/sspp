@@ -17,6 +17,24 @@ type JsonDataBuilder struct {
 	// Builds json data out of different data type
 	feature *Feature
 }
+
+func (jdb *JsonDataBuilder) Export() string {
+	switch jdb.feature.OpType {
+	case JSON:
+		return jdb.getJson()
+	case XML:
+		return jdb.getXml()
+	case YAML:
+		return jdb.getYaml()
+	case TOML:
+		return jdb.getToml()
+	case INI:
+		return jdb.getIni()
+	default:
+		return ""
+	}
+}
+
 // process and return JSON data
 func getIni(data, query, defaultVal string) string {
 	iData := ini.New().Load([]byte(data))
