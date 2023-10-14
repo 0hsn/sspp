@@ -4,5 +4,6 @@ import "fmt"
 
 func main() {
 	feat := ParseFlags()
-	fmt.Println(GetDataFromFeature(feat))
+	jdb := JsonDataBuilder{feature: feat}
+	fmt.Println(jdb.Export())
 }
