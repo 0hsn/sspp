@@ -14,24 +14,6 @@ type Feature struct {
 	Data, Query, DefaultVal string
 }
 
-// Factory to get data based on choice
-func GetDataFromFeature(feat *Feature) string {
-	switch feat.OpType {
-	case JSON:
-		return getJson(feat.Data, feat.Query, feat.DefaultVal)
-	case XML:
-		return getXml(feat.Data, feat.Query, feat.DefaultVal)
-	case YAML:
-		return getYaml(feat.Data, feat.Query, feat.DefaultVal)
-	case TOML:
-		return getToml(feat.Data, feat.Query, feat.DefaultVal)
-	case INI:
-		return getIni(feat.Data, feat.Query, feat.DefaultVal)
-	default:
-		return ""
-	}
-}
-
 func interpolate(i interface{}) interface{} {
 	switch x := i.(type) {
 	case map[interface{}]interface{}:

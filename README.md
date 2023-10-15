@@ -12,7 +12,7 @@ Supported types
 - `toml` :white_check_mark:
 - `hcl`
 - `jwt`
-- `ini` :white_check_mark:
+- `ini` :white_check_mark: see [#18](https://github.com/0hsn/sspp/issues/18) :snail:
 - `.properties`
 
 Software status: `Pre-Alpha`.
